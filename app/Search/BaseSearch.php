@@ -27,6 +27,20 @@ abstract class BaseSearch
 
     protected $offset = 0;
 
+    /**
+     * elastic 5.3+支持特性
+     * 响应结果中的hits总数表示匹配的文档总数而不是折叠的，去重后的聚合总数是未知的。
+     * 用于折叠的字段必须是单值的keyword或numeric字段并开启doc_values（文档值）。
+     * 折叠只应用于顶部文档，而且不会影响聚合。
+     * @var array
+     */
+    protected $collapse = [];
+    /**
+     * 计算折叠后总数，用于折叠后分页,默认不计算
+     * @var bool
+     */
+    protected $cardinality = false;
+
     public $sortFields = [];
 
     /**
@@ -89,6 +103,22 @@ abstract class BaseSearch
             'size' => $this->limit,
 //            '_source' => true
         ];
+
+        //折叠去重
+        if ($this->collapse) {
+            $params['body']['collapse'] = $this->collapse;
+        }
+
+        //计算折叠后总数，用于折叠后分页
+        if ($this->cardinality) {
+            $params['body']["aggs"] = [
+                "distinct_count" => [
+                    "cardinality" => [
+                        "field" => $this->collapse["field"]
+                    ]
+                ]
+            ];
+        }
 
         if (is_array($fields)) {
             $params['_source'] = $fields;
