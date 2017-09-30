@@ -1,2 +1,2 @@
-# laravel
-laravel框架，用于自测php新功能，新扩展，新开源软件
+# elasticsearch_laravel_php7
+在laravel框架上对elasticsearch的运用
