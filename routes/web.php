@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'Search\TestController@index');
+Route::get('/collapse', 'Search\TestController@collapse');

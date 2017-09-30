@@ -78,6 +78,24 @@ abstract class BaseSearch
     }
 
     /**
+     * @param $limit
+     * @return $this
+     */
+    public function setCollapse($collapse)
+    {
+        $this->collapse = $collapse;
+
+        return $this;
+    }
+
+    public function setCardinality($cardinality = false)
+    {
+        $this->cardinality = $cardinality;
+
+        return $this;
+    }
+
+    /**
      * 返回的数据格式为
      * array(
      * hits => array(
@@ -134,6 +152,9 @@ abstract class BaseSearch
 
         if (isset($result['hits'])) {
             $count = $result['hits']['total'];
+            if ($this->cardinality) {
+                $count = $result['aggregations']['distinct_count']['value'];
+            }
             foreach ($result['hits']['hits'] as $item) {
                 if (isset($item['_source'])) {
                     $list[$item['_id']] = $item['_source'];

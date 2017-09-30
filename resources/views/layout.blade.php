@@ -31,7 +31,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="/">一般搜索</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">聚合搜索</a></li>
+                        <li><a href="/collapse">折叠搜索</a></li>
                     </ul>
                 </li>
             </ul>
