@@ -86,11 +86,12 @@ abstract class BaseSearch
             'type' => $type,
             'body' => $body,
             'from' => $this->offset > self::MAX_RECORD ? self::MAX_RECORD : $this->offset,
-            'size' => $this->limit
+            'size' => $this->limit,
+//            '_source' => true
         ];
 
         if (is_array($fields)) {
-            $params['fields'] = $fields;
+            $params['_source'] = $fields;
         }
 
         Log::info('es search params:' . json_encode($params));
@@ -106,11 +107,6 @@ abstract class BaseSearch
             foreach ($result['hits']['hits'] as $item) {
                 if (isset($item['_source'])) {
                     $list[$item['_id']] = $item['_source'];
-                } elseif (isset($item['fields'])) {
-                    $list[$item['_id']] = array_map(
-                        function ($item) {
-                            return current($item);
-                        }, $item['fields']);
                 } else {
                     $list[$item['_id']] = [];
                 }

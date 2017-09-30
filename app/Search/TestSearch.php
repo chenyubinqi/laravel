@@ -227,8 +227,8 @@ class TestSearch extends BaseSearch
 
     public function setCreateTimeRange($startTime, $endTime)
     {
-        $this->createTimeStart = $startTime;
-        $this->createTimeEnd = $endTime;
+        $startTime && $this->createTimeStart = $startTime;
+        $endTime && $this->createTimeEnd = $endTime;
 
         return $this;
     }
@@ -243,10 +243,26 @@ class TestSearch extends BaseSearch
         $query = $filter = [];
 
         //注意_id 是数组
-        if (!empty($this->id) && is_array($this->id)) {
+        if (!empty($this->id)) {
+            if (is_array($this->id)) {
+                $query['bool']['must'][] = [
+                    'terms' => [
+                        '_id' => $this->id
+                    ]
+                ];
+            } else {
+                $query['bool']['must'][] = [
+                    'term' => [
+                        '_id' => $this->id
+                    ]
+                ];
+            }
+        }
+
+        if (!empty($this->productName)) {
             $query['bool']['must'][] = [
-                'terms' => [
-                    '_id' => $this->id
+                'match' => [
+                    'product_name' => $this->productName
                 ]
             ];
         }
@@ -263,7 +279,7 @@ class TestSearch extends BaseSearch
 
             $query['bool']['must'][] = [
                 'terms' => [
-                    'product_parent_category' => $this->productParentCategory,
+                    'product_parent_category' => $this->productParentCategory
                 ],
             ];
         }
@@ -275,10 +291,38 @@ class TestSearch extends BaseSearch
                 ],
             ];
         }
+
         if (!empty($this->source)) {
             $query['bool']['filter'][] = [
                 'term' => [
                     'source' => $this->source,
+                ],
+            ];
+        }
+
+        if ($this->createTimeStart > 0 && $this->createTimeEnd > 0) {
+            $query['bool']['filter'][] = [
+                'range' => [
+                    'create_time' => [
+                        'gte' => $this->createTimeStart,
+                        'lt' => $this->createTimeEnd,
+                    ],
+                ],
+            ];
+        } elseif ($this->createTimeStart > 0) {
+            $query['bool']['filter'][] = [
+                'range' => [
+                    'create_time' => [
+                        'gte' => $this->createTimeStart,
+                    ],
+                ],
+            ];
+        } elseif ($this->createTimeEnd > 0) {
+            $query['bool']['filter'][] = [
+                'range' => [
+                    'create_time' => [
+                        'lt' => $this->createTimeEnd,
+                    ],
                 ],
             ];
         }
