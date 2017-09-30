@@ -1,0 +1,8 @@
+/vendor
+.env
+.env.example
+/.idea
+phpunit.xml
+.DS_Store
+storage/
+/node_modules
