@@ -21,7 +21,8 @@ class TestController extends Controller
         $params = array_filter($request->all());
         $page = $params['page'] ?? 1;
         $pageSize = 10;
-        $search->setLimit(10)->setOffset(($page - 1) * $pageSize);
+        $search->setLimit(10)->setOffset(($page - 1) * $pageSize)
+            ->setSortField('sort', TestSearch::SORT_DESC);
         if (isset($params['id'])) {
             $search->setId($params['id']);
         }

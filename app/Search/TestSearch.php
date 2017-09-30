@@ -349,8 +349,10 @@ class TestSearch extends BaseSearch
 
         $body = $this->getCondition();
 
-        foreach ($this->sortFields as $field => $sort) {
-            $body['sort'][$field] = $sort == self::SORT_ASC ? 'asc' : 'desc';
+        if ($this->sortFields) {
+            foreach($this->sortFields as $field => $sort){
+                $body['sort'][$field] = $sort == self::SORT_ASC ? 'asc' : 'desc';
+            }
         }
 
         list ($count, $list) = $this->query(
