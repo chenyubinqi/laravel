@@ -4,8 +4,10 @@
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>PHP测试页</title>
-    <link rel="stylesheet" href="{{ elixir('css/app.css') }}" rel="stylesheet">
-    <script src="{{ elixir('js/app.js') }}"></script>
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <script src="{{ mix('js/manifest.js') }}"></script>
+    <script src="{{ mix('js/vendor.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">

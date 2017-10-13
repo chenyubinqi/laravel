@@ -12,4 +12,9 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+    .extract(['vue', 'bootstrap-datetime-picker', 'lodash', 'axios', 'jquery', 'bootstrap-sass'])
+    .sass('resources/assets/sass/app.scss', 'public/css')
+    .styles([
+        'node_modules/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css',
+        'public/css/app.css'
+    ], 'public/css/app.css').version();
