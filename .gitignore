@@ -6,4 +6,3 @@ phpunit.xml
 .DS_Store
 storage/
 /node_modules
-public/
