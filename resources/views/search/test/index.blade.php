@@ -115,6 +115,11 @@
         </tbody>
     </table>
     {!! $paginator->appends(request()->input())->render() !!}
+
+@stop
+
+@section('script')
+    <script src="{{ mix('js/vendor.js') }}"></script>
     <script type="text/javascript">
         $(".datetime-picker").datetimepicker({
             language: 'zh-CN',
@@ -124,4 +129,4 @@
             clearBtn: true,// 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
         });
     </script>
-@stop
+@endsection

@@ -5,9 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>PHP测试页</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <script src="{{ mix('js/manifest.js') }}"></script>
-    <script src="{{ mix('js/vendor.js') }}"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -40,7 +38,13 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-@yield('content')
+<div id="app">
+    @yield('content')
+</div>
+
+<script src="{{ mix('js/manifest.js') }}"></script>
+<script src="{{ mix('js/vendor.js') }}"></script>
+@yield('script')
 
 </body>
 </html>
