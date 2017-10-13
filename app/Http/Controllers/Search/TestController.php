@@ -45,6 +45,7 @@ class TestController extends Controller
         $params['end_create_time'] = $params['end_create_time'] ?? null;
         $search->setCreateTimeRange($params['start_create_time'], $params['end_create_time']);
         list($total, $items) = $search->getResult();
+        $total = $total < 10000 ? $total : 10000;
         $paginator = new LengthAwarePaginator($items, $total, $pageSize);
 
         return view('search.test.index', compact('paginator', 'params'));
@@ -89,6 +90,7 @@ class TestController extends Controller
         $params['end_create_time'] = $params['end_create_time'] ?? null;
         $search->setCreateTimeRange($params['start_create_time'], $params['end_create_time']);
         list($total, $items) = $search->getResult();
+        $total = $total < 10000 ? $total : 10000;
         $paginator = new LengthAwarePaginator($items, $total, $pageSize);
 
         return view('search.test.index', compact('paginator', 'params'));
