@@ -1,5 +1,16 @@
 let mix = require('laravel-mix');
 
+mix.webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                loader: "style-loader!css-loader"
+            },
+        ]
+    }
+});
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
