@@ -1,95 +1,127 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layout')
 
-        <title>Laravel</title>
+@section('content')
+    <p></p>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="id" class="col-md-1 control-label">产品ID</label>
+            <div class="col-md-2">
+                <input type="text" name="id" class="form-control" id="id" value="{{$params['id'] or ''}}"
+                       placeholder="23">
+            </div>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+            <label for="product_parent_category" class="col-md-1 control-label">产品名称</label>
+            <div class="col-md-2">
+                <input type="text" name="product_name" class="form-control" id="product_name"
+                       placeholder="" value="{{$params['product_name'] or ''}}">
+            </div>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+            <label for="cas_no" class="col-md-1 control-label">CAS号</label>
+            <div class="col-md-2">
+                <input type="text" name="cas_no" class="form-control" id="cas_no" value="{{$params['cas_no'] or ''}}"
+                       placeholder="">
+            </div>
+        </div>
 
-            .full-height {
-                height: 100vh;
-            }
+        <div class="form-group">
+            <label for="status" class="col-md-1 control-label">状态</label>
+            <div class="col-md-2">
+                <input type="text" name="status" class="form-control" id="status" placeholder=""
+                       value="{{$params['status'] or ''}}">
+            </div>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+            <label for="source" class="col-md-1 control-label">来源</label>
+            <div class="col-md-2">
+                <input type="text" name="source" class="form-control" id="source" placeholder=""
+                       value="{{$params['source'] or ''}}">
+            </div>
 
-            .position-ref {
-                position: relative;
-            }
+            <label for="product_parent_category" class="col-md-1 control-label">父分类</label>
+            <div class="col-md-2">
+                <input type="text" name="product_parent_category" class="form-control" id="product_parent_category"
+                       placeholder="" value="{{$params['product_parent_category'] or ''}}">
+            </div>
+        </div>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
+        <div class="form-group">
+            <label for="start_create_time" class="col-md-1 col-xs-3 control-label">创建时间</label>
+            <div class="col-md-6 col-xs-10">
+                <div class="input-append date datetime-picker col-md-3 col-xs-5" data-date-format="yyyy-mm-dd hh:ii:ss">
+                    <input size="16" type="text" name="start_create_time" class="form-control"
+                           value="{{$params['start_create_time'] or ''}}" readonly>
+                    <span class="add-on"><i class="icon-remove"></i></span>
+                    <span class="add-on"><i class="icon-th"></i></span>
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="col-md-1 col-xs-1 text-center">~</div>
+                <div class="input-append date datetime-picker col-md-3 col-xs-5" data-date-format="yyyy-mm-dd hh:ii:ss">
+                    <input size="16" type="text" name="end_create_time" class="form-control"
+                           value="{{$params['end_create_time'] or ''}}" readonly>
+                    <span class="add-on"><i class="icon-remove"></i></span>
+                    <span class="add-on"><i class="icon-th"></i></span>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-md-1">
+                <button type="submit" class="btn btn-default">搜索</button>
+            </div>
+        </div>
+
+
+    </form>
+
+    <p></p>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class="info">产品ID</th>
+            <th class="info">产品名称</th>
+            <th class="info">产品英文名称</th>
+            <th class="info">来源</th>
+            <th class="info">主分类</th>
+            <th class="info">分子式</th>
+            <th class="info">状态</th>
+            <th class="info">CAS号</th>
+            <th class="info">产品编码</th>
+            <th class="info">中文别名</th>
+            <th class="info">英文别名</th>
+            <th class="info">产品分类</th>
+            <th class="info">产品父分类</th>
+            <th class="info">排序</th>
+            <th class="info">创建时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($paginator as $id => $data)
+            <tr>
+                <td class="active" style="width:5%">{{$id}}</td>
+                <td class="active" style="width:5%">{{$data['product_name']}}</td>
+                <td class="active" style="width:5%">{{$data['product_name_en']}}</td>
+                <td class="active" style="width:5%">{{$data['source']}}</td>
+                <td class="active" style="width:5%">{{$data['main_category']}}</td>
+                <td class="active" style="width:5%">{{$data['formula']}}</td>
+                <td class="active" style="width:5%">{{$data['status']}}</td>
+                <td class="active" style="width:5%">{{$data['cas_no']}}</td>
+                <td class="active" style="width:5%">{{$data['product_code']}}</td>
+                <td class="active" style="width:5%">{{$data['zh_synonyms']}}</td>
+                <td class="active" style="width:8%">{{$data['en_synonyms']}}</td>
+                <td class="active" style="width:5%">{{ implode(',',$data['product_category'])}}</td>
+                <td class="active" style="width:5%">{{ implode(',',$data['product_parent_category'])}}</td>
+                <td class="active" style="width:5%">{{$data['sort']}}</td>
+                <td class="active" style="width:8%">{{$data['create_time']}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    {!! $paginator->appends(request()->input())->render() !!}
+    <script type="text/javascript">
+        $(".datetime-picker").datetimepicker({
+            language: 'zh-CN',
+            autoclose: true,
+            todayBtn: true,
+            todayHighlight: true,
+            clearBtn: true,// 自定义属性,true 显示 清空按钮 false 隐藏 默认:true
+        });
+    </script>
+@stop

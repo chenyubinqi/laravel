@@ -19,8 +19,9 @@ export const route = [
   {
     path: '/',
     component: Layout,
+      redirect: '/search',
     name: '首页',
-    // children: [{ path: 'dashboard', component: _import('dashboard/index') }]
+    children: [{ path: '/search', component: _import('elastic/index') }]
   }
 ]
 
