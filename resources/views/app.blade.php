@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>
-        @yield('title')
+        php-elasticsearch-vue
     </title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}" rel="stylesheet">
 
 </head>
-@yield('style')
+
 <script>
     window.Laravel = <?php echo json_encode([
         'csrfToken' => csrf_token(),
@@ -18,12 +18,12 @@
 <body>
 
 <div id="app">
-    @yield('content')
+
 </div>
 
 <script src="{{ mix('js/manifest.js') }}"></script>
 <script src="{{ mix('js/vendor.js') }}"></script>
-@yield('script')
+<script src="{{ mix('js/app.js') }}"></script>
 
 </body>
 </html>

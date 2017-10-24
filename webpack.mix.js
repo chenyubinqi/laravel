@@ -1,14 +1,28 @@
 let mix = require('laravel-mix');
+const path = require('path');
 
 mix.webpackConfig({
     module: {
         rules: [
-            {
-                test: /\.css$/,
-                loader: "style-loader!css-loader"
-            },
+            // {
+            //     test: /\.css$/,
+            //     loader: "style-loader!css-loader"
+            // },
         ]
-    }
+    },
+    resolve: {
+        alias: {
+            '@': 'assets/js',
+            'components': path.resolve(__dirname, 'assets/js/components'),
+            'views': path.resolve(__dirname, 'assets/js/views'),
+            'router': path.resolve(__dirname, 'assets/js/router'),
+        },
+        modules: [
+            'node_modules',
+            path.resolve(__dirname, "resources")
+        ]
+    },
+
 });
 
 /*
@@ -23,9 +37,6 @@ mix.webpackConfig({
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-    .extract(['vue', 'bootstrap-datetime-picker', 'lodash', 'axios', 'jquery'])
+    // .extract(['vue', 'vue-resource', 'lodash', 'jquery', 'element-ui'])
     .sass('resources/assets/sass/app.scss', 'public/css')
-    .styles([
-        'node_modules/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css',
-        'public/css/app.css'
-    ], 'public/css/app.css').version();
+    .version();
