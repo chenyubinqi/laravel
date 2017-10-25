@@ -16,7 +16,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class TestController extends Controller
 {
     public function index(Request $request)
-    {
+    {dd($request->all());
         $search = new TestSearch();
         $params = array_filter($request->all());
         $page = $params['page'] ?? 1;

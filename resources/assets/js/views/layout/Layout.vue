@@ -1,7 +1,10 @@
 <template>
     <div class="main-container">
         <navbar></navbar>
-        <router-view></router-view>
+        <div class="content-container">
+            <router-view></router-view>
+        </div>
+
     </div>
 </template>
 
@@ -16,11 +19,15 @@
     }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style>
 
     .main-container {
         min-height: 100%;
         transition: margin-left 0.28s ease-out;
+    }
+
+    .content-container {
+        margin-top: 10px;
     }
 
 </style>

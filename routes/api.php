@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::middleware('api')->get('/search', 'Search\TestController@index');
+Route::middleware('auth:api')->get('/collapse', 'Search\TestController@collapse');
