@@ -37,16 +37,15 @@ class ProductRepository
             $arr[$id] = null;
         }
 
-        $results = $connection->table(pms_product)
-            ->selectRaw('GROUP_CONCAT(DISTINCT `pms_relation_product_category`.`category_id` SEPARATOR \',\') 
-            AS `product_category`')
+        $results = $connection->table('pms_product')
+            ->selectRaw('pms_product.id,GROUP_CONCAT(DISTINCT c.`category_id` SEPARATOR \',\') AS `product_category`')
             ->leftJoin('pms_relation_product_category AS c', 'pms_product.id', '=', 'c.product_id')
             ->whereIn('pms_product.id', $ids)
             ->groupBy('pms_product.id')
             ->get();
 
         foreach ($results as $result) {
-            $arr[$result->id] = $result;
+            $arr[$result->id] = explode(',', $result->product_category);
         }
 
         return $arr;
@@ -58,12 +57,12 @@ class ProductRepository
      */
     public function getLastId()
     {
-        $last = app('es')->type('moldata')->body([
+        $last = app('es')->type('pms_product')->body([
             "sort" => [
                 "_script" => [
                     "type" => "number",
                     "script" => [
-                        "inline" => "Integer.parseInt(doc['_uid'].value.substring(8))" //moldata#
+                        "inline" => "Integer.parseInt(doc['_uid'].value.substring(12))" //pms_product#
                     ],
                     "order" => "desc"
                 ]

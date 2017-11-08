@@ -136,7 +136,7 @@ class indexProduct extends Command
                 sem_release($signal);
 
                 if (!empty($list)) {
-                    app("es")->type("moldata")->bulk($list);
+                    app('es')->type("pms_product")->bulk($list);
                 }
 
                 $this->info("$page/$totalPage");

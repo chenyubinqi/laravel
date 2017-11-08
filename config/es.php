@@ -120,9 +120,7 @@ return [
                         'product_category' => [
                             'type' => 'long'
                         ],
-                        'product_parent_category' => [
-                            'type' => 'long'
-                        ],
+
                         'sort' => [
                             'type' => 'long'
                         ],
