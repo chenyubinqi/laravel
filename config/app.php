@@ -177,7 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Cviebrock\LaravelElasticsearch\ServiceProvider::class,
+        Basemkhirat\Elasticsearch\ElasticsearchServiceProvider::class
+
 
     ],
 
@@ -228,7 +229,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'Elasticsearch' => Cviebrock\LaravelElasticsearch\Facade::class,
+        'ES' => Basemkhirat\Elasticsearch\Facades\ES::class
+
 
     ],
 

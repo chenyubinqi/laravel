@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
 
-        Search\Test::class,
+        Search\indexProduct::class,
     ];
 
     /**
