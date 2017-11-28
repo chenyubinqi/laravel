@@ -17,7 +17,7 @@
             </el-input>
 
             <el-input style="width: 200px;" class="filter-item" placeholder="父分类"
-                      v-model="listQuery.product_parent_category">
+                      v-model="listQuery.product_category">
             </el-input>
 
             <el-date-picker
@@ -25,104 +25,97 @@
                     type="datetimerange"
                     :picker-options="pickerOptions2"
                     placeholder="选择时间范围"
+                    @change="handleTimeChange"
                     align="right">
             </el-date-picker>
 
-            <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
+            <el-button class="filter-item" type="primary" icon="search" @click="handleFilter">搜索</el-button>
         </div>
 
         <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit
                   highlight-current-row style="width: 100%">
 
-            <el-table-column align="center" label="产品ID" >
+            <el-table-column align="center" label="产品ID" min-width="5%">
                 <template scope="scope">
-                    <span>{{scope.row.id}}</span>
+                    <span>{{scope.row._id}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column  align="center" label="产品名称">
+            <el-table-column align="center" label="产品名称" min-width="5%">
                 <template scope="scope">
-                    <span>{{scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+                    <span>{{scope.row.product_name}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column  label="产品英文名称">
+            <el-table-column label="产品英文名称" min-width="5%">
                 <template scope="scope">
-                    <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.title}}</span>
-                    <el-tag>{{scope.row.type | typeFilter}}</el-tag>
+                    <span>{{scope.row.product_name_en}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column  align="center" label="来源">
+            <el-table-column align="center" label="来源" min-width="3%">
                 <template scope="scope">
-                    <span>{{scope.row.author}}</span>
+                    <span>{{scope.row.source}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column  v-if='showAuditor' align="center" label="主分类">
+            <el-table-column align="center" label="主分类" min-width="3%">
                 <template scope="scope">
-                    <span style='color:red;'>{{scope.row.auditor}}</span>
+                    <span>{{scope.row.main_category}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column  label="分子式">
+            <el-table-column label="分子式" min-width="3%">
                 <template scope="scope">
-                    <icon-svg v-for="n in +scope.row.importance" icon-class="star" class="meta-item__icon"
-                              :key="n"></icon-svg>
+                    <span>{{scope.row.formula}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="状态" >
+            <el-table-column align="center" label="状态" min-width="5%">
                 <template scope="scope">
-                    <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>
+                    <span>{{statusOptions[scope.row.status]}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column class-name="status-col" label="CAS号" >
+            <el-table-column class-name="status-col" label="CAS号" min-width="5%">
                 <template scope="scope">
-                    <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
+                    <span>{{scope.row.cas_no}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="产品编码" >
+            <el-table-column align="center" label="产品编码" min-width="5%">
                 <template scope="scope">
-                    <span>{{scope.row.id}}</span>
+                    <span>{{scope.row.product_code}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="中文别名" >
+            <el-table-column align="center" label="中文别名" min-width="10%">
                 <template scope="scope">
-                    <span>{{scope.row.id}}</span>
+                    <span>{{scope.row.zh_synonyms}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="英文别名" >
+            <el-table-column align="center" label="英文别名" min-width="10%">
                 <template scope="scope">
-                    <span>{{scope.row.id}}</span>
+                    <span>{{scope.row.en_synonyms}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="产品分类" >
+            <el-table-column align="center" label="产品分类" min-width="5%">
                 <template scope="scope">
-                    <span>{{scope.row.id}}</span>
+                    <span>{{scope.row.product_category | categoryFilter}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="产品父分类" >
+            <el-table-column align="center" label="排序" min-width="3%">
                 <template scope="scope">
-                    <span>{{scope.row.id}}</span>
+                    <span>{{scope.row.sort}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="排序" >
+            <el-table-column align="center" label="创建时间" min-width="5%">
                 <template scope="scope">
-                    <span>{{scope.row.id}}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="创建时间" >
-                <template scope="scope">
-                    <span>{{scope.row.id}}</span>
+                    <span>{{scope.row.create_time}}</span>
                 </template>
             </el-table-column>
 
@@ -132,7 +125,7 @@
         <div v-show="!listLoading" class="pagination-container">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
                            :current-page.sync="listQuery.page"
-                           :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit"
+                           :page-sizes="[10,20,30, 50]" :page-size="listQuery.page_size"
                            layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
         </div>
@@ -144,7 +137,6 @@
 
     export default {
         name: 'elastic',
-
         data() {
             return {
                 list: null,
@@ -152,16 +144,15 @@
                 listLoading: true,
                 listQuery: {
                     page: 1,
-                    limit: 20,
+                    page_size: 10,
                     id: undefined,
                     product_name: undefined,
                     cas_no: undefined,
                     status: undefined,
                     source: undefined,
-                    product_parent_category: undefined,
-                    create_time: undefined
+                    product_category: undefined
                 },
-
+                create_time: [new Date().getTime() - 3600 * 1000 * 24 * 30, new Date()],
                 statusOptions: {1: '有效', 2: '无效'},
                 tableKey: 0,
                 pickerOptions2: {
@@ -190,56 +181,52 @@
                             picker.$emit('pick', [start, end]);
                         }
                     }]
-                },
-                create_time: this.create_time
+                }
             }
         },
+
+        computed: {
+        },
         filters: {
-            statusFilter(status) {
-                const statusMap = {
-                    published: 'success',
-                    draft: 'gray',
-                    deleted: 'danger'
-                }
-                return statusMap[status]
-            },
-            typeFilter(type) {
-                return calendarTypeKeyValue[type]
+            categoryFilter(type) {
+                return type.join(',')
             }
         },
         created() {
-            this.$http.get('api/search',{params: this.listQuery}).then((response)=>{
-                console.log(response);
-                this.list = response.data.items
-                this.total = response.data.total
-                this.listLoading = false
-            })
+            this.getList()
         },
         methods: {
+            getList() {
+                this.listLoading = true
+                this.$http.get('api/search', {params: this.listQuery}).then((response) => {
+                    console.log(response.body);
+                    this.list = response.body.data
+                    this.total = response.body.total
+                    this.listLoading = false
+                })
+            },
             handleFilter() {
                 this.listQuery.page = 1
                 this.getList()
             },
             handleSizeChange(val) {
-                this.listQuery.limit = val
+                this.listQuery.page_size = val
                 this.getList()
             },
             handleCurrentChange(val) {
                 this.listQuery.page = val
                 this.getList()
             },
-            timeFilter(time) {
-                if (!time[0]) {
-                    this.listQuery.start = undefined
-                    this.listQuery.end = undefined
-                    return
+            handleTimeChange(val){
+                console.log(val);
+                this.listQuery.start = undefined
+                this.listQuery.end = undefined
+                if (val) {
+                    const time = val.split(' - ', 2);
+                    this.listQuery.start = time[0].trim();
+                    this.listQuery.end = time[1].trim();
                 }
-                this.listQuery.start = parseInt(+time[0] / 1000)
-                this.listQuery.end = parseInt((+time[1] + 3600 * 1000 * 24) / 1000)
-            },
-
-
-
+            }
 
         }
     }

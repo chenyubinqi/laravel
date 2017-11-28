@@ -1,9 +1,9 @@
 <template>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-submenu index="1">
+    <el-menu :default-active="activeIndex" :router="true" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-submenu index="elasticsearch">
             <template slot="title">elasticsearch</template>
-            <el-menu-item index="1-1" route="/search">搜索</el-menu-item>
-            <el-menu-item index="1-2" route="">折叠分页</el-menu-item>
+            <el-menu-item index="/search">搜索</el-menu-item>
+            <el-menu-item index="/search">折叠分页</el-menu-item>
         </el-submenu>
         <!--<el-submenu index="2">-->
             <!--<template slot="title">我的工作台</template>-->
@@ -15,7 +15,7 @@
     export default {
         data() {
             return {
-                activeIndex: '1',
+                activeIndex: 'elasticsearch',
             };
         },
         methods: {

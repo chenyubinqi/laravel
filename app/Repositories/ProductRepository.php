@@ -72,4 +72,39 @@ class ProductRepository
         return $last ? $last->_id : 0;
     }
 
+    public function getList($params)
+    {
+        $es = app('es')->type('pms_product');
+        $page = isset($params['page']) ? $params['page'] : 1;
+        $pageSize = isset($params['page_size']) ? $params['page_size'] : 10;
+        $this->resetEsPage($page, $pageSize);
+        if (isset($params['id']) && $params['id']) {
+            $es = $es->id($params['id']);
+        }
+        if (isset($params['product_name']) && $params['product_name']) {
+            $es = $es->where("product_name", "like", $params['product_name']);
+        }
+        if (isset($params['cas_no']) && $params['cas_no']) {
+            $es = $es->where("cas_no", $params['cas_no']);
+        }
+        if (isset($params['status']) && $params['status']) {
+            $es = $es->where("status", $params['status']);
+        }
+        if (isset($params['source']) && $params['source']) {
+            $es = $es->where("source", $params['source']);
+        }
+        if (isset($params['product_category']) && $params['product_category']) {
+            $es = $es->where("product_category", $params['product_category']);
+        }
+        if (isset($params['start']) && $params['start']) {
+            $es = $es->where("create_time", '>=', $params['start']);
+        }
+        if (isset($params['end']) && $params['end']) {
+            $es = $es->where("create_time", '<', $params['end']);
+        }
+
+        return $this->resetEsResult($es->take($pageSize)->skip(($page - 1) * $pageSize)->get());
+
+    }
+
 }

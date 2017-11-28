@@ -179,4 +179,21 @@ trait BaseRepository
 
     }
 
+    /**
+     * 处理DB返回的结果集
+     * @param $data
+     * @param $total
+     * @return array
+     */
+    public function resetDbResult($data, $total = false)
+    {
+        if (false === $total) return is_array($data) ? current($data) : $data;
+
+        return [
+            'total' => $total,
+            'data' => $data,
+        ];
+
+    }
+
 }

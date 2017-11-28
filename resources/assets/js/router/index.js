@@ -9,25 +9,25 @@ Vue.use(Router)
 import Layout from '../views/layout/Layout'
 
 /**
-* icon : the icon show in the sidebar
-* hidden : if `hidden:true` will not show in the sidebar
-* redirect : if `redirect:noredirect` will no redirct in the levelbar
-* noDropdown : if `noDropdown:true` will has no submenu
-* meta : { role: ['admin'] }  will control the page role
-**/
+ * icon : the icon show in the sidebar
+ * hidden : if `hidden:true` will not show in the sidebar
+ * redirect : if `redirect:noredirect` will no redirct in the levelbar
+ * noDropdown : if `noDropdown:true` will has no submenu
+ * meta : { role: ['admin'] }  will control the page role
+ **/
 export const route = [
-  {
-    path: '/',
-    component: Layout,
-      redirect: '/search',
-    name: '首页',
-    children: [{ path: '/search', component: _import('elastic/index') }]
-  }
+    {
+        path: '/',
+        component: Layout,
+        redirect: '/search',
+        name: '首页',
+        children: [{path: '/search', component: _import('elastic/index')}]
+    }
 ]
 
 export default new Router({
-  // mode: 'history', //后端支持可开
-  scrollBehavior: () => ({ y: 0 }),
-  routes: route
+     //mode: 'history', //后端支持可开
+    scrollBehavior: () => ({y: 0}),
+    routes: route
 })
 
